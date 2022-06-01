@@ -11,5 +11,6 @@ interface IDetail {
     }
     episode?: Array
   };
-  characters?: Array;
+  characterList?: Array;
+  charArr?: string | string[]
 }

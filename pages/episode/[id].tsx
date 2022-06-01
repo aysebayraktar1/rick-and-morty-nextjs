@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { GetServerSideProps, NextPage } from "next";
 import { getCharacterDetail, getEpisodeDetail } from "../../services/rest";
@@ -8,15 +8,54 @@ import {
   CharacterListStyled,
   DetailTitleStyled,
   CharacterTitle,
+  FilterBarStyled,
 } from "../../styles/episode";
 import CharacterCard from "../../components/CharacterCard";
-import {filter} from '../../components/filter'
-import CustomSelect from "../../components/Dropdown";
-const DetailPage: NextPage<IDetail> = ({ detail, characters }) => {
-  
-  console.log(filter)
+import {
+  filterGender,
+  filterStatus,
+  filterSpecies,
+} from "../../components/filter";
+import Dropdown from "../../components/Dropdown";
+const DetailPage: NextPage<IDetail> = ({ detail, characterList }) => {
+  const [filter, setFilter] = useState({
+    gender: "Male",
+    status: "Dead",
+    species: "Humanoid",
+  });
+  const [characters, setCharacters] = useState(characterList);
+
+  const handleSelectedOption = (key, text) => {
+    setFilter({ ...filter, [key]: text });
+  };
+
+  useEffect(() => {
+    const { gender, status, species } = filter;
+    const newCharList = characterList.filter(
+      (item) =>
+        item.gender == gender &&
+        item.status == status &&
+        item.species == species
+    );
+    newCharList && setCharacters(newCharList);
+  }, [filter]);
+
   return (
     <DetailStyled>
+      <FilterBarStyled>
+        <Dropdown
+          optionsList={filterGender}
+          handleSelectedOption={handleSelectedOption}
+        />
+        <Dropdown
+          optionsList={filterStatus}
+          handleSelectedOption={handleSelectedOption}
+        />
+        <Dropdown
+          optionsList={filterSpecies}
+          handleSelectedOption={handleSelectedOption}
+        />
+      </FilterBarStyled>
       <DetailTitleStyled>Episode: {detail.name}</DetailTitleStyled>
       <CharacterTitle>Characters</CharacterTitle>
       <CharacterListStyled>
@@ -30,15 +69,16 @@ const DetailPage: NextPage<IDetail> = ({ detail, characters }) => {
           />
         ))}
       </CharacterListStyled>
-      <CustomSelect/>
     </DetailStyled>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const { id } = query;
-  let detail, newArry = [], characters
-  
+  let detail,
+    charArr = [],
+    characters;
+
   // fetch comics
   try {
     detail = await getEpisodeDetail(id);
@@ -46,12 +86,11 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     console.log(err);
   }
   detail?.characters?.map((item) => {
-    newArry.push(splitAndParseIdFromUrl(item));
+    charArr.push(splitAndParseIdFromUrl(item));
   });
 
   try {
-    characters = await getCharacterDetail(newArry);
-    console.log(characters);
+    characters = await getCharacterDetail(charArr, "male", "live", "Humanoid");
   } catch (error) {
     console.log(error);
   }
@@ -59,7 +98,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   return {
     props: {
       detail,
-      characters,
+      characterList: characters,
+      charArr,
     },
   };
 };

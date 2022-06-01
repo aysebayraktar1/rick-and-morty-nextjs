@@ -1,38 +1,38 @@
-export const filter = [
-     {
-       id: 0,
-       text: "male",
-       selected: false,
-       key: "gender",
-     },
-     {
-       id: 1,
-       text: "female",
-       selected: false,
-       key: "gender",
-     },
-     {
-       id: 2,
-       title: "live",
-       selected: false,
-       key: "status",
-     },
-     {
-       id: 3,
-       title: "alive",
-       selected: false,
-       key: "status",
-     },
-     {
-       id: 4,
-       title: "Humanoid",
-       selected: false,
-       key: "species",
-     },
-     {
-       id: 5,
-       title: "Human",
-       selected: false,
-       key: "species",
-     },
-   ];
+export const filterGender = [
+  {
+    id: 0,
+    text: "Male",
+    key: "gender",
+  },
+  {
+    id: 1,
+    text: "Female",
+    key: "gender",
+  },
+];
+
+export const filterStatus = [
+  {
+    id: 0,
+    text: "Dead",
+    key: "status",
+  },
+  {
+    id: 1,
+    text: "Alive",
+    key: "status",
+  },
+];
+
+export const filterSpecies = [
+  {
+    id: 0,
+    text: "Humanoid",
+    key: "species",
+  },
+  {
+    id: 1,
+    text: "Human",
+    key: "species",
+  },
+];

@@ -13,6 +13,12 @@ export const CharacterCardWrapper = styled.div`
   &:hover {
     box-shadow: rgb(0 0 0 / 12%) 0px 5px 22px 4px;
   }
+  @media (max-width: 768px) {
+    width: 35%;
+  }
+  @media (max-width: 425px) {
+    width: 70%;
+  }
 `;
 
 export const AvatarStyled = styled.img`
