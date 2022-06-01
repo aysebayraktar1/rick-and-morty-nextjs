@@ -79,7 +79,7 @@ const CharacterDetail: NextPage<IDetail> = ({ detail }) => {
             const id = splitAndParseIdFromUrl(item);
             return (
               <a href={`/episode/${id}`} key={id}>
-                <EpisodeListItem>Episode: {id}</EpisodeListItem>
+                <EpisodeListItem>Episode {id}</EpisodeListItem>
               </a>
             );
           })}

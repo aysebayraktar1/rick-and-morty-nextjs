@@ -7,10 +7,20 @@ interface IDetail {
     species?: string;
     status?: string;
     location?: {
-      name?: string
-    }
-    episode?: Array
+      name?: string;
+    };
+    episode?: Array;
   };
   characterList?: Array;
-  charArr?: string | string[]
+  charArr?: string | string[];
+}
+
+interface IHome {
+  episodeList?: {
+    results?: Array;
+    info?: {
+      pages?: number;
+      count?: number;
+    };
+  };
 }

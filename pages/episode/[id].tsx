@@ -37,7 +37,7 @@ const DetailPage: NextPage<IDetail> = ({ detail, characterList }) => {
         item.status == status &&
         item.species == species
     );
-    newCharList && setCharacters(newCharList);
+    newCharList.length > 0 && setCharacters(newCharList);
   }, [filter]);
 
   return (

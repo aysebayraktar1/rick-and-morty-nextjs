@@ -1,4 +1,4 @@
-import { GetStaticProps } from "next";
+import { GetStaticProps, NextPage } from "next";
 import React, { useEffect, useState } from "react";
 import Pagination from "../components/Pagination";
 import { getEpisodeList } from "../services/rest";
@@ -9,10 +9,10 @@ import {
   EpisodeNumberStyled,
 } from "../styles/home";
 
-const Home = ({ episodeList }) => {
+const Home: NextPage<IHome> = ({ episodeList }) => {
 
   const { results = [], info } = episodeList || {};
-  const { pages } = info;
+  const { pages, count } = info;
 
   const [currentPage, setCurrentPage] = useState(1);
   const [episodes, setEpisodes] = useState(results);
@@ -42,7 +42,7 @@ const Home = ({ episodeList }) => {
           </a>
         </EpisodeCardWrapper>
       ))}
-      <Pagination totalItem={info?.count} paginate={paginate} />
+      <Pagination totalItem={count} paginate={paginate} />
     </HomeStyled>
   );
 };
